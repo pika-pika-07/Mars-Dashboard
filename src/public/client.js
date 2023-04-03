@@ -31,6 +31,9 @@ const App = (state) => {
         <section>
             ${latest_images.length > 0 ? LatestRoverPhotos(latest_images) : ""  }
         </section>
+        <section>
+            ${latest_images.length > 0 ? displayRoverInfo(latest_images[0].rover) : ""  }
+        </section>
     </main>
     <footer></footer>
 `
@@ -47,43 +50,49 @@ window.addEventListener('load', () => {
 
 const SelectorSection = () => {
     return (
-        `<button id="opportunity" onClick= "fetchRoverDetails(store,'opportunity')"> Opportunity </button>
+        `
+        <div class="button-section">
+        <button id="opportunity" onClick= "fetchRoverDetails(store,'opportunity')"> Opportunity </button>
         <button id="curiosity" onClick= "fetchRoverDetails(store,'curiosity')"> curiosity </button>
         <button id="spirit" onClick= "fetchRoverDetails(store,'spirit')"> spirit </button>
+        </div>
         `
     )
 }
 
 const LatestRoverPhotos = (latest_images) => {
-        const image = latest_images[0]
-        
-        const roverDetail = image.rover
+
         return (
             `
             <div> 
-                <p> Fetched latest images </p>
-                <img src= "${image.img_src}"/>
-                <p> ${roverDetail.name}</p>
-                <p> ${roverDetail.status}</p>
-                <p> ${roverDetail.landing_date}</p>
+                <h3> Latest Images of rover are </h3>
+                <section class="image-section">
+                <div>
+                    ${latest_images.map(image => `<img src= "${image.img_src}"/>`)}
+                </div>
+                </section>
             </div>
             `
         )
     
 }
 
+const displayRoverInfo = (roverDetail) => {
+    return (
+        `
+        <div> 
+            <h3>Rover Name:  ${roverDetail.name}</h3>
+            <h3>Rover Status ${roverDetail.status}</h3>
+            <h3> Rover Landing Date ${roverDetail.landing_date}</h3>
+            <h3> Rover Launch Date ${roverDetail.launch_date}</h3>
+        </div>
+        `
+    )
+}
+
 
 // ------------------------------------------------------  API CALLS
 
-// Example API call
-const getImageOfTheDay = (state) => {
-    let { apod } = state
-
-    fetch(`http://localhost:3000/apod`)
-        .then(res => res.json())
-        .then(apod => updateStore(store, { apod }))
-    // latestMarsRoversPhotos(state)
-}
 
 const fetchRoverDetails = (state,rover) => {
     const result = fetch(`http://localhost:3000/${rover}`)
