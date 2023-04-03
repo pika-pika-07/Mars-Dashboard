@@ -25,4 +25,47 @@ app.get('/apod', async (req, res) => {
     }
 })
 
+app.get('/mars-rovers', async (req, res) => {
+    try {
+        let result = await fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/latest_photos?page=1&api_key=${process.env.API_KEY}`)
+                    .then(res => res.json())
+        res.send(result.latest_photos )
+    } catch (err) {
+        console.log('error:', err);
+    }
+})
+
+
+app.get('/opportunity', async (req, res) => {
+    try {
+        let result = await fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/opportunity/latest_photos?page=1&api_key=${process.env.API_KEY}`)
+                    .then(res => res.json())
+        res.send(result)
+    } catch (err) {
+        console.log('error:', err);
+    }
+})
+
+
+app.get('/curiosity', async (req, res) => {
+    try {
+        let result = await fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/latest_photos?page=1&api_key=${process.env.API_KEY}`)
+                    .then(res => res.json())
+        res.send(result)
+    } catch (err) {
+        console.log('error:', err);
+    }
+})
+
+
+app.get('/spirit', async (req, res) => {
+    try {
+        let result = await fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/spirit/latest_photos?page=1&api_key=${process.env.API_KEY}`)
+                    .then(res => res.json())
+        res.send(result)
+    } catch (err) {
+        console.log('error:', err);
+    }
+})
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
