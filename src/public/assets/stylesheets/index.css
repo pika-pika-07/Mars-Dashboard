@@ -9,6 +9,11 @@ body {
 
 header {
   /* header styles */
+  color: yellow;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 main {
@@ -19,7 +24,23 @@ main {
 footer {
   /* footer styles */
 }
-
+.image-section{
+  display:flex;
+  flex-direction: row;
+  margin-top:60px; 
+  
+}
+img{
+  width: 200px;
+  height: 200px;
+  margin-right:10px;
+  margin-bottom:10px;
+}
+.button-section{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 /* -------------------  TABLET  --------------------- */
 @media (min-width: 768px) {
   /* use mobile */
