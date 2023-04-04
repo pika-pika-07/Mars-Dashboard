@@ -29,10 +29,10 @@ const App = (state) => {
     <main>
         ${SelectorSection()}
         <section>
-            ${latest_images.length > 0 ? LatestRoverPhotos(latest_images) : ""  }
+            ${latest_images.length > 0 ? LatestRoverPhotos(state, renderImages) : ""  }
         </section>
         <section>
-            ${latest_images.length > 0 ? displayRoverInfo(latest_images[0].rover) : ""  }
+            ${latest_images.length > 0 ? displayRoverInfo(state, renderRoverInfo) : ""  }
         </section>
     </main>
     <footer></footer>
@@ -60,24 +60,32 @@ const SelectorSection = () => {
     )
 }
 
-const LatestRoverPhotos = (latest_images) => {
-
-        return (
-            `
-            <div> 
-                <h3> Latest Images of rover are </h3>
-                <section class="image-section">
-                <div>
-                    ${latest_images.map(image => `<img src= "${image.img_src}"/>`)}
-                </div>
-                </section>
-            </div>
-            `
-        )
-    
+const imageMap = (images) => {
+    return `
+         ${images.map(image => `<img src= "${image.img_src}"/>`)}
+    `
 }
 
-const displayRoverInfo = (roverDetail) => {
+const renderImages = (store) => {
+    debugger
+    const {latest_images}  = store
+    return (
+        `
+        <div> 
+            <h3> Latest Images of rover are </h3>
+            <section class="image-section">
+            <div>
+                ${imageMap(latest_images)}
+            </div>
+            </section>
+        </div>
+        `
+    )
+}
+
+const renderRoverInfo = (store) => {
+    const {latest_images} = store
+    const roverDetail = latest_images[0].rover
     return (
         `
         <div> 
@@ -88,6 +96,15 @@ const displayRoverInfo = (roverDetail) => {
         </div>
         `
     )
+}
+
+const LatestRoverPhotos = (store,func) => {
+    
+      return func(store)
+}
+
+const displayRoverInfo = (store,func) => {
+     return  func(store)
 }
 
 
